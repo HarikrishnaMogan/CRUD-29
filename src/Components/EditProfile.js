@@ -1,4 +1,4 @@
-import axios from "axios";
+//import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../Context";
 import "./components.css";
@@ -21,7 +21,9 @@ export default function EditProfile({match})
         //if page refreshed this will fetch api and set input fileds
         if(uservalue.length===0)
         {
-           const {data} = await axios.get(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`);
+           //const {data} = await axios.get(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`);
+           const userdata = await fetch(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`);
+           const data = await userdata.json();
            uservalue.push(data);
         }
         uservalue.forEach((user)=>{
@@ -41,14 +43,29 @@ export default function EditProfile({match})
    
       
       let putuser = async()=>{
-          const {data} = await axios.put(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`,{
+          /*const {data} = await axios.put(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`,{
               name:name,
               email:email,
               company:company,
               country:country,
               city:city,
               address:address
-          })
+          })*/
+          const userdata = await fetch(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`,{
+            method:"PUT",
+            headers:{
+                "content-type":"application/json"
+            },
+            body:JSON.stringify({
+                name:name,
+                email:email,
+                company:company,
+                country:country,
+                city:city,
+                address:address
+            })
+        });
+        const data = await userdata.json();
           let tempusers = [...context.users];
           let index = context.users.findIndex((user)=>user.id === match.params.id);
           tempusers[index] = data;

@@ -1,5 +1,5 @@
 import "./components.css";
-import axios from "axios";
+//import axios from "axios";
 import {useState,useContext} from "react";
 import {Context} from "../Context";
 
@@ -14,12 +14,24 @@ function CreateUser()
      const[useradded,setUseradded] = useState(true);
     //to post user to API
    let postuser= async()=>{
-      const{data} = await axios.post("https://611f26469771bf001785c730.mockapi.io/users",
+      /*const{data} = await axios.post("https://611f26469771bf001785c730.mockapi.io/users",
       {
           name:name,
           email:email,
           country:country
+      });*/
+      const userdata = await fetch("https://611f26469771bf001785c730.mockapi.io/users",{
+          method:"POST",
+          headers:{
+              "content-type":"application/json"
+          },
+          body:JSON.stringify({
+            name:name,
+            email:email,
+            country:country
+          })
       });
+      const data = await userdata.json();
       console.log(data);
       let tempusers = [...context.users];
       tempusers.push(data);

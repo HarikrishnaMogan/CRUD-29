@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import { useContext } from "react";
 import { Context } from "../Context";
-import axios from "axios";
+//import axios from "axios";
 
     
     
@@ -19,7 +19,9 @@ function Users()
 
      // to delete user in api
    let deleteuser= async()=>{
-         const {data} = await axios.delete(`https://611f26469771bf001785c730.mockapi.io/users/${deleteid}`);
+         //const {data} = await axios.delete(`https://611f26469771bf001785c730.mockapi.io/users/${deleteid}`);
+         const userdata = await fetch(`https://611f26469771bf001785c730.mockapi.io/users/${deleteid}`,{method:"DELETE"});
+         const data = await userdata.json();
          console.log(data);
          let tempusers = context.users.filter((x)=>x.id !== deleteid );
          context.setUsers(tempusers);

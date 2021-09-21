@@ -1,4 +1,4 @@
-import axios from "axios";
+//import axios from "axios";
 import { useState,useContext ,useEffect} from "react";
 import { Context } from "../Context";
 import "./components.css";
@@ -21,7 +21,9 @@ export default function EditUser({match})
         //to fetch api and get user if page refreshed
          if(uservalue.length===0)
          {
-            const {data} = await axios.get(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`);
+            //const {data} = await axios.get(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`);
+            const userdata = await fetch(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`);
+           const data = await userdata.json();
             uservalue.push(data);
          }
         uservalue.forEach((user)=>{
@@ -38,12 +40,24 @@ export default function EditUser({match})
      
 
     let PutUser = async()=>{
-        const {data} = await axios.put(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`,{
+       /* const {data} = await axios.put(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`,{
             name:name,
             email:email,
             country:country
 
+        });*/
+        const userdata = await fetch(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`,{
+            method:"PUT",
+            headers:{
+                "content-type":"application/json"
+            },
+            body:JSON.stringify({
+                name:name,
+                email:email,
+                country:country,
+            })
         });
+        const data = await userdata.json();
         console.log(data);
         let tempusers = [...context.users];
         let index = context.users.findIndex((user)=>user.id === match.params.id);

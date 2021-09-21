@@ -1,7 +1,7 @@
 
 import {Context} from "../Context";
 import { useContext,useState,useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 
 export default function Profile({match})
 {
@@ -15,7 +15,11 @@ export default function Profile({match})
             setUser(tempuser);
         }
         else{
-             const {data} = await axios.get(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`);
+            // const {data} = await axios.get(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`);
+             
+             const users = await fetch(`https://611f26469771bf001785c730.mockapi.io/users/${match.params.id}`);
+             const data = await users.json();
+             console.log(data);
              setUser([data]);
         }
        
