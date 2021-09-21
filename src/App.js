@@ -9,6 +9,8 @@ import {useEffect,useState} from "react";
 import {Context} from "./Context";
 //import axios from "axios";
 import "./Components/components.css";
+
+//first used axios then commented the axios code in all components and replaced it with fetch
 function App()
 {
     const [users,setUsers]= useState([]);
